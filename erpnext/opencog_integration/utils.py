@@ -2,6 +2,7 @@
 Utility functions for OpenCog Integration
 """
 
+import time
 import frappe
 from typing import Dict, Any, List, Optional
 
@@ -177,12 +178,10 @@ def batch_process_with_load_balancing(
 	Returns:
 		Processing results
 	"""
-	import time
 	from erpnext.opencog_integration.api import get_load_balancer
 	
 	load_balancer = get_load_balancer()
 	results = []
-	item_counter = 0
 	
 	for i in range(0, len(items), batch_size):
 		batch = items[i : i + batch_size]
@@ -215,8 +214,6 @@ def batch_process_with_load_balancing(
 						resource_id, {"success": False, "processing_time": processing_time}
 					)
 					frappe.log_error(f"Batch processing error: {str(e)}", "Batch Processing")
-			
-			item_counter += 1
 	
 	return results
 
