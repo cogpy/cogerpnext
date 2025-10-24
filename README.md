@@ -56,6 +56,8 @@ Running a business is a complex task - handling invoices, tracking stock, managi
 
 - [**Frappe UI**](https://github.com/frappe/frappe-ui): A Vue-based UI library, to provide a modern user interface. The Frappe UI library provides a variety of components that can be used to build single-page applications on top of the Frappe Framework.
 
+- [**OpenCog Integration**](erpnext/opencog_integration/README.md): An autonomous orchestrating and load-balancing cognitive architecture for optimization of ERPNext. Provides intelligent task management, resource allocation, and pattern recognition using cognitive principles inspired by OpenCog.
+
 ## Production Setup
 
 ### Managed Hosting
