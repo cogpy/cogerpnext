@@ -67,6 +67,9 @@ setup_wizard_test = "erpnext.setup.setup_wizard.test_setup_wizard.run_setup_wiza
 
 after_install = "erpnext.setup.install.after_install"
 
+# OpenCog Integration - Initialize cognitive resources on startup
+after_migrate = ["erpnext.opencog_integration.scheduler.initialize_default_resources"]
+
 boot_session = "erpnext.startup.boot.boot_session"
 notification_config = "erpnext.startup.notifications.get_notification_config"
 get_help_messages = "erpnext.utilities.activation.get_help_messages"
@@ -418,9 +421,15 @@ scheduler_events = {
 		],
 		# Daily but offset by 45 minutes
 		"45 0 * * *": [],
+		# OpenCog cognitive optimization - every 5 minutes
+		"*/5 * * * *": [
+			"erpnext.opencog_integration.scheduler.cognitive_optimization_cycle",
+		],
 	},
 	"hourly": [
 		"erpnext.projects.doctype.project.project.hourly_reminder",
+		"erpnext.opencog_integration.scheduler.pattern_recognition_cycle",
+		"erpnext.opencog_integration.scheduler.sync_erp_entities_to_atomspace",
 	],
 	"hourly_long": [],
 	"hourly_maintenance": [
