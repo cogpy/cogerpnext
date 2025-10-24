@@ -1,0 +1,28 @@
+{
+ "cards": [],
+ "charts": [],
+ "content": "<!-- Add content here -->",
+ "creation": "2025-10-24 09:00:00.000000",
+ "custom_css": "",
+ "docstatus": 0,
+ "doctype": "Page",
+ "dynamic_template": 0,
+ "icon": "fa fa-brain",
+ "idx": 0,
+ "modified": "2025-10-24 09:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "OpenCog Integration",
+ "name": "cognitive-dashboard",
+ "owner": "Administrator",
+ "page_name": "Cognitive Dashboard",
+ "restrict_to_domain": "",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ],
+ "script": "",
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "Cognitive Dashboard"
+}
