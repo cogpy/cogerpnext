@@ -177,35 +177,46 @@ def batch_process_with_load_balancing(
 	Returns:
 		Processing results
 	"""
+	import time
 	from erpnext.opencog_integration.api import get_load_balancer
 	
 	load_balancer = get_load_balancer()
 	results = []
+	item_counter = 0
 	
 	for i in range(0, len(items), batch_size):
 		batch = items[i : i + batch_size]
 		
-		for item in batch:
-			# Allocate task
-			task = {"id": f"batch_item_{i}", "type": "batch_processing"}
+		for j, item in enumerate(batch):
+			# Allocate task with unique ID
+			task = {"id": f"batch_item_{i}_{j}", "type": "batch_processing"}
 			resource_id = load_balancer.allocate_task(task)
 			
 			if resource_id:
+				start_time = time.time()
 				try:
 					# Process item
 					result = processor_function(item)
 					results.append(result)
 					
+					# Calculate actual processing time
+					processing_time = time.time() - start_time
+					
 					# Release resource with success
 					load_balancer.release_resource(
-						resource_id, {"success": True, "processing_time": 1}
+						resource_id, {"success": True, "processing_time": processing_time}
 					)
 				except Exception as e:
+					# Calculate processing time even on failure
+					processing_time = time.time() - start_time
+					
 					# Release resource with failure
 					load_balancer.release_resource(
-						resource_id, {"success": False, "processing_time": 1}
+						resource_id, {"success": False, "processing_time": processing_time}
 					)
 					frappe.log_error(f"Batch processing error: {str(e)}", "Batch Processing")
+			
+			item_counter += 1
 	
 	return results
 
